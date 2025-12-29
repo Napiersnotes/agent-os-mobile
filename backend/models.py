@@ -1,10 +1,9 @@
 """
-Database models placeholder
+Database models - FIXED: renamed 'metadata' column
 """
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-import json
 from datetime import datetime
 
 Base = declarative_base()
@@ -18,7 +17,7 @@ class User(Base):
     name = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     
-    tasks = relationship("Task", back_populates="user")
+    tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -28,13 +27,14 @@ class Task(Base):
     input_text = Column(Text, nullable=False)
     priority = Column(Integer, default=1)
     status = Column(String, default="pending")
-    metadata = Column(Text, default="{}")
+    # FIXED: renamed from 'metadata' to 'task_metadata'
+    task_metadata = Column(Text, default="{}")
     device_info = Column(Text, default="{}")
     created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, onupdate=datetime.utcnow)
+    updated_at = Column(DateTime, onupdate=datetime.utcnow, nullable=True)
     
     user = relationship("User", back_populates="tasks")
-    results = relationship("TaskResult", back_populates="task")
+    results = relationship("TaskResult", back_populates="task", cascade="all, delete-orphan")
 
 class TaskResult(Base):
     __tablename__ = "task_results"
