@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      PYTHONPATH: ${{ github.workspace }}/backend   # ← Das fixxt den src-Import-Fehler!
+      PYTHONPATH: ${{ github.workspace }}/backend   # ← Das fixxt den src-Import-Fehler endgültig!
 
     services:
       postgres:
