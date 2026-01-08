@@ -1,4 +1,3 @@
-
 ```markdown
 # 🤖 Agent OS - Mobile First AI Agent Platform
 
